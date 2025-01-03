@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
 import { ref, set } from "firebase/database"; // Import Realtime Database methods
 import { db } from "../../lib/firebaseConfig"; // Ensure you're importing Realtime Database
+import Link from "next/link";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -15,7 +20,11 @@ export default function SignUpPage() {
   const handleSignUpWithEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Use Realtime Database 'set' method to store user data
@@ -25,7 +34,7 @@ export default function SignUpPage() {
       });
 
       router.push("/signin");
-    } catch (err) {
+    } catch (error) {
       setError("Error creating account. Please try again.");
     }
   };
@@ -35,7 +44,7 @@ export default function SignUpPage() {
     try {
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
-    } catch (err) {
+    } catch (error) {
       setError("Error signing up with Google.");
     }
   };
@@ -44,12 +53,19 @@ export default function SignUpPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
         <div className="text-center">
-          <h1 className="text-3xl font-extrabold text-gray-900">Create Account</h1>
-          <p className="mt-2 text-sm text-gray-600">Join us today and start your journey</p>
+          <h1 className="text-3xl font-extrabold text-gray-900">
+            Create Account
+          </h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Join us today and start your journey
+          </p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <div
+            className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
             <span className="block sm:inline">{error}</span>
           </div>
         )}
@@ -104,7 +120,9 @@ export default function SignUpPage() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
             </div>
           </div>
 
@@ -120,9 +138,12 @@ export default function SignUpPage() {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             If you already have an account,{" "}
-            <a href="/signin" className="text-blue-600 hover:text-blue-500 font-medium">
-              Sign In here
-            </a>
+            <Link
+              href="/signin"
+              className="text-blue-600 hover:text-blue-500 font-medium"
+            >
+              <p>Sign In here</p>
+            </Link>
           </p>
         </div>
       </div>

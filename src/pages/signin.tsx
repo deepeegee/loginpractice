@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
+import Link from "next/link";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -16,7 +21,7 @@ export default function SignInPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
-    } catch (err) {
+    } catch (error) {
       setError("Invalid credentials. Please try again.");
     }
   };
@@ -26,7 +31,7 @@ export default function SignInPage() {
     try {
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
-    } catch (err) {
+    } catch (error) {
       setError("Error signing in with Google.");
     }
   };
@@ -35,14 +40,19 @@ export default function SignInPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
         <div className="text-center">
-          <h1 className="text-3xl font-extrabold text-gray-900">Welcome Back</h1>
+          <h1 className="text-3xl font-extrabold text-gray-900">
+            Welcome Back
+          </h1>
           <p className="mt-2 text-sm text-gray-600">
             Sign in to access your account
           </p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <div
+            className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
             <span className="block sm:inline">{error}</span>
           </div>
         )}
@@ -72,12 +82,9 @@ export default function SignInPage() {
           </div>
 
           <div className="flex items-center justify-between">
-            <a 
-              href="/forgot-password" 
-              className="text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors"
-            >
-              Forgot your password?
-            </a>
+            <Link href="/forgot-password">
+              <h3>Forgot Password?</h3>
+            </Link>
           </div>
 
           <div>
@@ -96,7 +103,9 @@ export default function SignInPage() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
             </div>
           </div>
 
@@ -109,13 +118,14 @@ export default function SignInPage() {
         </div>
 
         <div className="text-center mt-4">
-          <span className="text-gray-600">Don't have an account?</span>
-          <a 
-            href="/signup" 
+          <span className="text-gray-600">Don&apos;t have an account?</span>
+
+          <Link
+            href="/signup"
             className="ml-2 text-blue-600 hover:text-blue-500 font-medium transition-colors"
           >
-            Sign up
-          </a>
+            <p> Sign up</p>
+          </Link>
         </div>
       </div>
     </div>

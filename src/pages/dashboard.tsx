@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../../lib/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { User } from 'firebase/auth';
 
 const Dashboard = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
