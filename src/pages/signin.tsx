@@ -21,7 +21,7 @@ export default function SignInPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
-    } catch (error) {
+    } catch {
       setError("Invalid credentials. Please try again.");
     }
   };
@@ -31,7 +31,7 @@ export default function SignInPage() {
     try {
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
-    } catch (error) {
+    } catch {
       setError("Error signing in with Google.");
     }
   };

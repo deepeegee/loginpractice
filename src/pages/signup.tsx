@@ -34,7 +34,7 @@ export default function SignUpPage() {
       });
 
       router.push("/signin");
-    } catch (error) {
+    } catch {
       setError("Error creating account. Please try again.");
     }
   };
@@ -44,7 +44,7 @@ export default function SignUpPage() {
     try {
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
-    } catch (error) {
+    } catch {
       setError("Error signing up with Google.");
     }
   };
